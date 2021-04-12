@@ -1,5 +1,6 @@
 package com.example.app_bluetooth;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     static volatile BluetoothAdapter BTadapter = null;
 
     private BluetoothSocket mbtSocket;
-    protected OutputStream outputStream = null;
+    static protected OutputStream outputStream = null;
     protected InputStream inputStream = null;
 
     @Override
@@ -41,13 +42,18 @@ public class MainActivity extends AppCompatActivity {
         BTadapter = BluetoothAdapter.getDefaultAdapter();
 
         listView = (ListView) findViewById(R.id.lvopcoes);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Object listItem = listView.getItemAtPosition(position);
                 String deviceMac = listItem.toString().substring(0, listItem.toString().indexOf("-") - 1);
-                setDeviceBluetooth(deviceMac);
+                System.out.println("MAC: " + deviceMac);
+                String nameDevice = mDeviceList.get(position);
+
+                setDeviceBluetooth(deviceMac, nameDevice);
+                Intent intent = new Intent(view.getContext(), Main2Activity.class);
+                startActivity(intent);
             }
         });
 
@@ -78,14 +84,14 @@ public class MainActivity extends AppCompatActivity {
             Set<BluetoothDevice> all_devices = bluetoothAdapter.getBondedDevices();
             if (all_devices.size() > 0) {
                 for (BluetoothDevice currentDevice : all_devices) {
-                    mDeviceList.add(currentDevice.getAddress() + " - " + currentDevice.getName());
+                    mDeviceList.add(currentDevice.getAddress() + "-" + currentDevice.getName());
                     listView.setAdapter(new ArrayAdapter<>(getApplication(), android.R.layout.simple_list_item_1, mDeviceList));
                 }
             }
         }
     }
 
-    private void setDeviceBluetooth(final String deviceMAC) {
+    private void setDeviceBluetooth(final String deviceMAC, final String nameDevice) {
         final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
         this.btDevices = BTadapter.getBondedDevices();
         if (deviceMAC != null) {
@@ -99,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
                                 try {
                                     mbtSocket = btDevice.createRfcommSocketToServiceRecord(SPP_UUID);
                                     mbtSocket.connect();
+
+                                    Toast.makeText(MainActivity.this, nameDevice + " conectado.", Toast.LENGTH_SHORT).show();
+
                                     outputStream = mbtSocket.getOutputStream();
                                     inputStream = mbtSocket.getInputStream();
                                     Log.i("GERTEC", "Impressora Connectada: " + deviceMAC);
@@ -113,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
 
                                     mbtSocket = null;
-                                    setDeviceBluetooth(deviceMAC);
+                                    setDeviceBluetooth(deviceMAC, nameDevice);
                                 }
                             }
                         });
@@ -121,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-
         }
     }
 }

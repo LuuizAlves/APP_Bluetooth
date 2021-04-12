@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    tools:context=".Main2Activity"
 >
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutHeader"
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             android:layout_marginLeft="15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-        />
+            />
 
         <TextView
             android:id="@+id/textDevice"
@@ -41,7 +41,7 @@
             app:layout_constraintStart_toEndOf="@id/textHeader"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="4dp"
-        />
+            />
 
         <ImageView
             android:id="@+id/imageMenu"
@@ -55,41 +55,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/textHeader"
             android:layout_marginRight="15dp"
-        />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/white_rectangle_background"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageMenu"
-            android:layout_marginLeft="15dp"
-            >
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnListar"
-                android:layout_gravity="center|right"
-                android:gravity="center|center_vertical"
-                android:text="Listar Devices Pareados"
-                android:textStyle="bold"
-                android:background="@color/colorWhite"
             />
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ListView
-        android:id="@+id/lvopcoes"
-        android:layout_width="wrap_content"
-        android:layout_height="217dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="150dp"
-    />
 </RelativeLayout>

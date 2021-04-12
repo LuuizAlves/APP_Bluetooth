@@ -5,7 +5,9 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     static volatile BluetoothAdapter BTadapter = null;
 
     private BluetoothSocket mbtSocket;
-    static protected OutputStream outputStream = null;
-    protected InputStream inputStream = null;
+    static OutputStream outputStream = null;
+    static InputStream inputStream = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +47,27 @@ public class MainActivity extends AppCompatActivity {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 Object listItem = listView.getItemAtPosition(position);
-                String deviceMac = listItem.toString().substring(0, listItem.toString().indexOf("-") - 1);
+                String deviceMac = listItem.toString().substring(0, 17);
                 System.out.println("MAC: " + deviceMac);
                 String nameDevice = mDeviceList.get(position);
 
                 setDeviceBluetooth(deviceMac, nameDevice);
-                Intent intent = new Intent(view.getContext(), Main2Activity.class);
-                startActivity(intent);
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(mbtSocket.isConnected()){
+                            System.out.println("Foi para outra tela");
+                            Intent intent = new Intent(view.getContext(), Main2Activity.class);
+                            startActivity(intent);
+                        }else{
+                            System.out.println("Error");
+                        }
+                    }
+                }, 2000);
             }
         });
 
@@ -105,19 +119,15 @@ public class MainActivity extends AppCompatActivity {
                                 try {
                                     mbtSocket = btDevice.createRfcommSocketToServiceRecord(SPP_UUID);
                                     mbtSocket.connect();
-
-                                    Toast.makeText(MainActivity.this, nameDevice + " conectado.", Toast.LENGTH_SHORT).show();
-
                                     outputStream = mbtSocket.getOutputStream();
                                     inputStream = mbtSocket.getInputStream();
-                                    Log.i("GERTEC", "Impressora Connectada: " + deviceMAC);
+                                    System.out.println("Impressora Conectada!");
                                 } catch (IOException var4) {
                                     IOException ex = var4;
                                     try {
                                         ex.printStackTrace();
                                         mbtSocket.close();
                                     } catch (IOException var3) {
-                                        Log.i("GERTEC ERROR", var3.getMessage());
                                         var3.printStackTrace();
                                     }
 

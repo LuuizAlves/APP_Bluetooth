@@ -1,95 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
->
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutHeader"
+    <Button
+        android:id="@+id/btnListar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/header_background"
-        android:padding="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-        <TextView
-            android:id="@+id/textHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/app_bluetooth"
-            android:textColor="@color/colorWhite"
-            android:textSize="25sp"
-            android:layout_marginLeft="15dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-        />
+        android:layout_gravity="center|right"
+        android:background="@color/colorWhite"
+        android:gravity="center|center_vertical"
+        android:text="Listar Devices"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textDevice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/e4"
-            android:textColor="@color/colorWhite"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/textHeader"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="4dp"
-        />
+    <RelativeLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="528dp" />
 
-        <ImageView
-            android:id="@+id/imageMenu"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="15dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_menu"
-            android:tint="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="@id/textHeader"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/textHeader"
-            android:layout_marginRight="15dp"
-        />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/white_rectangle_background"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageMenu"
-            android:layout_marginLeft="15dp"
-            >
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnListar"
-                android:layout_gravity="center|right"
-                android:gravity="center|center_vertical"
-                android:text="Listar Devices Pareados"
-                android:textStyle="bold"
-                android:background="@color/colorWhite"
-            />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ListView
-        android:id="@+id/lvopcoes"
-        android:layout_width="wrap_content"
-        android:layout_height="217dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="150dp"
-    />
-</RelativeLayout>
+</LinearLayout>
